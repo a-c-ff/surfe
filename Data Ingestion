@@ -1,0 +1,75 @@
+# Data Ingestion from CSV to BigQuery
+
+import pandas as pd
+import re
+import os
+from google.colab import auth, drive
+from google.cloud import bigquery, storage
+
+# Authenticate Google Account for Cloud SDK
+auth.authenticate_user()
+
+# Mount Google Drive
+drive.mount('/content/drive')
+
+# Set up Google Cloud credentials
+PROJECT_ID = "pure-rhino-455710-d9"
+DATASET_ID = "surfe"
+BUCKET_NAME = "af-surfe"
+
+# Initialize BigQuery and Storage clients
+client = bigquery.Client(project=PROJECT_ID)
+storage_client = storage.Client()
+
+# Function to clean column names
+def clean_column_name(col):
+    col = col.lower().strip()  # Convert to lower case and trim spaces
+    col = re.sub(r'\s*\(utc\)\s*', '_utc', col)  # Replace " (UTC)" with "utc"
+    col = re.sub(r'\s+', '_', col)  # Replace spaces with underscores
+    return col
+
+# Process and upload CSV
+def process_and_upload(csv_path, table_name):
+    # Ensure the file exists
+    if not os.path.exists(csv_path):
+        print(f"Error: File {csv_path} not found.")
+        return
+
+    # Load CSV into a DataFrame
+    df = pd.read_csv(csv_path)
+
+    # Clean column names
+    df.columns = [clean_column_name(col) for col in df.columns]
+
+    # Save cleaned CSV
+    cleaned_csv_path = f"/content/cleaned_{table_name}.csv"
+    df.to_csv(cleaned_csv_path, index=False)
+
+    # Upload to GCS
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blob = bucket.blob(f"{table_name}.csv")
+    blob.upload_from_filename(cleaned_csv_path)
+    print(f"Uploaded {cleaned_csv_path} to GCS.")
+
+    # Load into BigQuery
+    table_ref = f"{PROJECT_ID}.{DATASET_ID}.{table_name}"
+    job_config = bigquery.LoadJobConfig(
+        source_format=bigquery.SourceFormat.CSV,
+        skip_leading_rows=1,
+        autodetect=True,
+    )
+
+    uri = f"gs://{BUCKET_NAME}/{table_name}.csv"
+    load_job = client.load_table_from_uri(uri, table_ref, job_config=job_config)
+    load_job.result()  # Wait for the job to complete
+
+    # Print confirmation message
+    print(f"Loaded data into BigQuery table {table_ref}.")
+
+# Define Google Drive paths
+invoices_csv_path = "/content/drive/My Drive/invoices.csv"
+customers_csv_path = "/content/drive/My Drive/customers.csv"
+
+# Process both files
+process_and_upload(invoices_csv_path, "invoices")
+process_and_upload(customers_csv_path, "customers")
