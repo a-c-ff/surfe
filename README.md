@@ -30,7 +30,7 @@ Ran SQL in Big Query console to normalise primary key name in both tables, and a
 
 a. Implement program to calculate the MRR of any customer at any given date.
 
-[SQL File
+[monthly_MRR.sql
 ](https://github.com/a-c-ff/surfe/blob/surfe/monthly_MRR.sql)
 
 <i>Limitations:</i>
@@ -48,7 +48,7 @@ a. Implement program to calculate the MRR of any customer at any given date.
 
 b. Build a basic cohort segmentation of the MRR.
 
-[SQL File
+[cohort_segmentation.sql
 ](https://github.com/a-c-ff/surfe/blob/surfe/cohort_segmentation.sql)
 
 <i>Limitations:</i>
@@ -83,7 +83,8 @@ a. Analyze the calculated MRR data (from task 2) to identify trends and patterns
 Implement program that will calculate:
 
 a. <b>Month-over-month MRR growth</b>
-- SQL File: monthly_MRR 
+- [monthly_MRR.sql
+](https://github.com/a-c-ff/surfe/blob/surfe/monthly_MRR.sql)
 
 - [BQ Link](https://console.cloud.google.com/bigquery?ws=!1m7!1m6!12m5!1m3!1spure-rhino-455710-d9!2sus-central1!3saf410dea-2367-4aa0-a789-ed1317ae3fa6!2e1)
 
