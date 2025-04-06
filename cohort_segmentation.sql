@@ -21,7 +21,7 @@ SELECT
 
 SELECT
   activation_month,
-  COUNT(customers.customer_id) AS total_customers,
+  COUNT(DISTINCT customers.customer_id) AS total_customers,
   -- count of unique customers who made a purchase in the month of / months following their activation month
   COUNT(DISTINCT CASE WHEN invoices.invoice_month = customers.activation_month THEN customers.customer_id END) AS month_0,
   COUNT(DISTINCT CASE WHEN invoices.invoice_month = FORMAT_DATE('%Y-%m', DATE_ADD(PARSE_DATE('%Y-%m', customers.activation_month), INTERVAL 1 MONTH)) 
