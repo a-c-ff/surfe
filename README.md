@@ -28,8 +28,6 @@ The primary key between two tables is: `id` in `customers` + `customers` in `inv
 <br>
 <br>
 <br>
-<br>
-<br>
 
 <b>2. Monthly Recurring Revenue (MRR) Calculation:</b>
 
@@ -56,8 +54,6 @@ The primary key between two tables is: `id` in `customers` + `customers` in `inv
 - I decided to not perform the % retention so that further downstream, we can report on both raw values and %
 - With more time, I would further optimise the Query can be further optimised in a couple ways: (1) fewer date transformations to improve readability (e.g. dbt macros) (2) move to Looker for better visualisation capabilities (e.g. conditional formatting to make it easier to identify trends) 
 
-<br>
-<br>
 <br>
 <br>
 <br>
