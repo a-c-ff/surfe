@@ -52,8 +52,7 @@ The below SQL was run in my Big Query console to normalise primary key name in b
 - `invoices` has a lot of columns that I didn’t take into account for the MRR calculation. There is an opportunity to update the columns if they are useful further downstream. Depending on reporting needs, it might be beneficial to surface MRR by: currency (to split customers by country), applied coupons etc.
 <br>
 <br>
-<b>b. Build a basic cohort segmentation of the MRR</b>: [cohort_segmentation.sql
-](https://github.com/a-c-ff/surfe/blob/surfe/cohort_segmentation.sql)
+<b>b. Build a basic cohort segmentation of the MRR</b>: [cohort_segmentation.sql](https://github.com/a-c-ff/surfe/blob/surfe/cohort_segmentation.sql)
 
 <i>Limitations:</i>
 - `created_utc` in `customers` was assumed to be the users activation date.
