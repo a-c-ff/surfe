@@ -134,6 +134,8 @@ There could also be a moving average added. Reporting on this metric on a daily 
 
  With more time and access to additional data, I would like to enhance this analysis:
 
+- Visual database design schema
+- More structure to tables and how they interact with each other to reduce repeated code [e.g. base, staging, entity structure](https://docs.getdbt.com/best-practices/how-we-structure/2-staging)
 - Segment user cohorts using more granualar subscription metadata e.g. plan type, business size (e.g. SME, enterprise)
 - Cohort segmentation visualisation
 - Contextualise patterns in retention by reflecting on CRM engagement strategy over time
